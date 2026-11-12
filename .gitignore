@@ -1,41 +1,21 @@
-# ---- Quartus (arquivos gerados na compilação) ----
+# Quartus: arquivos gerados ao compilar
 quartus/db/
 quartus/incremental_db/
 quartus/output_files/
 quartus/simulation/
 quartus/greybox_tmp/
-quartus/hc_output/
-quartus/.qsys_edit/
 *.qws
 *.bak
-*.rpt
-*.summary
-*.smsg
-*.done
-*.jdi
-*.pin
-*.sld
-*.sof
-*.pof
-*.qarlog
 c5_pin_model_dump.txt
 PLLJ_PLLSPE_INFO.txt
 
-# ---- ModelSim / Questa ----
+# ModelSim
 work/
 transcript
-vsim.wlf
 *.wlf
 modelsim.ini
-*.vstf
 
-# ---- GHDL ----
-*.cf
-*.o
-*.vcd
-*.ghw
-
-# ---- Sistema ----
-.DS_Store
+# Windows / Mac
 Thumbs.db
 desktop.ini
+.DS_Store
