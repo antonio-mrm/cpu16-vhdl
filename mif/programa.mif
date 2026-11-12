@@ -1,0 +1,28 @@
+-- =====================================================================
+--  programa.mif - Programa padrão carregado na memória
+--
+--  Teste básico (vai ser trocado pelos programas da Etapa 4):
+--    00: ADDI R1, R0, 5     R1 = 5
+--    01: ADDI R2, R0, 3     R2 = 3
+--    02: ADD  R3, R1, R2    R3 = 8
+--    03: ST   R3, R0, 16    Mem[0x10] = 8
+--    04: LD   R4, R0, 16    R4 = Mem[0x10] = 8
+--    05: JMP  5             fica parado aqui
+--
+--  Resultado esperado: R1=5, R2=3, R3=8, R4=8, Mem[0x10]=0008
+-- =====================================================================
+WIDTH=16;
+DEPTH=256;
+
+ADDRESS_RADIX=HEX;
+DATA_RADIX=HEX;
+
+CONTENT BEGIN
+	00  :  5205;   -- ADDI R1, R0, 5    0101 001 000 000101
+	01  :  5403;   -- ADDI R2, R0, 3    0101 010 000 000011
+	02  :  0650;   -- ADD  R3, R1, R2   0000 011 001 010 000
+	03  :  7610;   -- ST   R3, R0, 16   0111 011 000 010000
+	04  :  6810;   -- LD   R4, R0, 16   0110 100 000 010000
+	05  :  A005;   -- JMP  5            1010 000000000101
+	[06..FF]  :  0000;
+END;

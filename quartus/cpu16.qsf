@@ -24,6 +24,7 @@ set_global_assignment -name VHDL_FILE ../rtl/ula.vhd
 set_global_assignment -name VHDL_FILE ../rtl/banco_regs.vhd
 set_global_assignment -name VHDL_FILE ../rtl/registrador.vhd
 set_global_assignment -name VHDL_FILE ../rtl/extensor_sinal.vhd
+set_global_assignment -name VHDL_FILE ../rtl/memoria.vhd
 set_global_assignment -name VHDL_FILE ../rtl/cpu16_top.vhd
 
 # ---------------------------------------------------------------------

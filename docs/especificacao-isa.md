@@ -117,5 +117,7 @@ A memória da FPGA (altsyncram) é **síncrona**: ela registra o endereço numa 
 - Na borda de descida (meio do ciclo), a memória registra o endereço e entrega o dado.
 - Na próxima borda de subida, o dado já está pronto para ser guardado no IR ou no RDM.
 
+A memória é o componente `altsyncram` (o mesmo que o IP Catalog gera) instanciado direto em `rtl/memoria.vhd`, o que permite carregar o `.mif` tanto no Quartus quanto na simulação do ModelSim.
+
 Assim cada acesso à memória cabe em **um estado**, a máquina de estados fica igual à do livro e não são
 necessários estados de espera. Com o clock manual pelo botão, a borda de descida acontece quando o botão é solto.
