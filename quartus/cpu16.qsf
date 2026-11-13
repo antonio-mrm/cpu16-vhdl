@@ -20,11 +20,14 @@ set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
 #  Arquivos VHDL (caminhos relativos a esta pasta)
 #  -> adicionar aqui cada componente novo da pasta rtl/
 # ---------------------------------------------------------------------
+set_global_assignment -name VHDL_FILE ../rtl/cpu16_pkg.vhd
 set_global_assignment -name VHDL_FILE ../rtl/ula.vhd
 set_global_assignment -name VHDL_FILE ../rtl/banco_regs.vhd
 set_global_assignment -name VHDL_FILE ../rtl/registrador.vhd
 set_global_assignment -name VHDL_FILE ../rtl/extensor_sinal.vhd
 set_global_assignment -name VHDL_FILE ../rtl/memoria.vhd
+set_global_assignment -name VHDL_FILE ../rtl/unidade_controle.vhd
+set_global_assignment -name VHDL_FILE ../rtl/cpu.vhd
 set_global_assignment -name VHDL_FILE ../rtl/cpu16_top.vhd
 
 # ---------------------------------------------------------------------

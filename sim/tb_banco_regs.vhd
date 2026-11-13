@@ -6,7 +6,8 @@
 --
 --  ModelSim:
 --    vlib work
---    vcom -2008 rtl/banco_regs.vhd sim/tb_banco_regs.vhd
+--    vcom -2008 rtl/cpu16_pkg.vhd rtl/banco_regs.vhd sim/tb_banco_regs.vhd
+--  (ou rode todos os testes de uma vez: do sim/rodar_testes.do)
 --    vsim -c tb_banco_regs -do "run -all; quit"
 -- =====================================================================
 library ieee;

@@ -10,6 +10,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.cpu16_pkg.all;   -- tipo regs_t
 
 entity banco_regs is
   port (
@@ -26,7 +27,6 @@ entity banco_regs is
 end entity banco_regs;
 
 architecture rtl of banco_regs is
-  type regs_t is array (0 to 7) of std_logic_vector(15 downto 0);
   signal regs : regs_t := (others => (others => '0'));
 begin
 

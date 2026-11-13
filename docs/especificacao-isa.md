@@ -108,6 +108,55 @@ Então a 2ª porta de leitura do banco precisa de um **mux** escolhendo entre o 
 
 LEDs verdes: número do estado em binário em `LEDG[3:0]`.
 
+### Transições
+
+| Estado atual | Próximo estado |
+|---|---|
+| FETCH | DECODE |
+| DECODE | EXEC_R (ADD, SUB, AND, OR, SLT) · EXEC_I (ADDI, LD, ST) · BRANCH (BEQ, BNE) · JUMP (JMP) · FETCH (opcode inválido) |
+| EXEC_R | WB_R |
+| EXEC_I | MEM_READ (LD) · MEM_WRITE (ST) · WB_ADDI (ADDI) |
+| MEM_READ | WB_LD |
+| WB_R, WB_ADDI, WB_LD, MEM_WRITE, BRANCH, JUMP | FETCH |
+
+Ciclos por instrução: tipo R, ADDI e ST = 4 · LD = 5 · BEQ, BNE e JMP = 3.
+
+### Sinais de controle por estado
+
+Sinal em branco = 0 (ou "00").
+
+| Estado | PCWrite | PCWriteCond | PCSource | IouD | MemWrite | IRWrite | RegWrite | MemtoReg | ULASrcA | ULASrcB | ULAOp |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0 FETCH | 1 | | 00 | 0 | | 1 | | | 0 (PC) | 01 (1) | 00 (+) |
+| 1 DECODE | | | | | | | | | 0 (PC) | 10 (imm) | 00 (+) |
+| 2 EXEC_R | | | | | | | | | 1 (A) | 00 (B) | 10 (opcode) |
+| 3 WB_R | | | | | | | 1 | 0 (SaídaULA) | | | |
+| 4 EXEC_I | | | | | | | | | 1 (A) | 10 (imm) | 00 (+) |
+| 5 WB_ADDI | | | | | | | 1 | 0 (SaídaULA) | | | |
+| 6 MEM_READ | | | | 1 | | | | | | | |
+| 7 WB_LD | | | | | | | 1 | 1 (RDM) | | | |
+| 8 MEM_WRITE | | | | 1 | 1 | | | | | | |
+| 9 BRANCH | | 1 | 01 | | | | | | 1 (A) | 00 (B) | 01 (−) |
+| 10 JUMP | 1 | | 10 | | | | | | | | |
+
+Significado dos sinais:
+
+| Sinal | Função |
+|---|---|
+| PCWrite | carrega o PC sempre |
+| PCWriteCond | carrega o PC se a condição do desvio for verdadeira (BEQ: `zero = 1`; BNE: `zero = 0`; o bit 12 do opcode diferencia os dois) |
+| PCSource | valor carregado no PC: 00 = saída da ULA (PC + 1) · 01 = SaídaULA (alvo do desvio) · 10 = endereço do JMP |
+| IouD | endereço da memória: 0 = PC (instrução) · 1 = SaídaULA (dado) |
+| MemWrite | grava B na memória |
+| IRWrite | carrega o IR com a palavra lida da memória |
+| RegWrite | grava no registrador Ri |
+| MemtoReg | dado gravado no banco: 0 = SaídaULA · 1 = RDM |
+| ULASrcA | entrada A da ULA: 0 = PC · 1 = registrador A |
+| ULASrcB | entrada B da ULA: 00 = registrador B · 01 = constante 1 · 10 = imediato estendido |
+| ULAOp | 00 = soma · 01 = subtração · 10 = operação dada pelos 3 bits baixos do opcode (tipo R) |
+
+Os registradores RDM, A, B e SaídaULA são carregados em todo ciclo, como no multiciclo do Patterson, então não precisam de sinal de controle.
+
 ### Memória síncrona: clock invertido
 
 A memória da FPGA (altsyncram) é **síncrona**: ela registra o endereço numa borda de clock e só então entrega o dado.
